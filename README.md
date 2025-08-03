@@ -40,15 +40,29 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Starting the MCP Server
+### Edit MCP Client config file
 
-Run the MCP server:
-
-```bash
-python main.py
+```json
+{
+  "mcpServers": {
+    "Code Execution Service": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "docker",
+        "--with",
+        "fastmcp",
+        "fastmcp",
+        "run",
+        "path\\to\\the\\main.py"
+      ],
+      "env": {}
+    }
+  }
+}
 ```
 
-The server will start and expose the following MCP tools:
 
 ### Available Tools
 
