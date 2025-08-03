@@ -50,7 +50,7 @@ class PythonREPLServer:
         try:
             while True:
                 # Receive data from client
-                data = client_socket.recv(4096).decode('utf-8')
+                data = client_socket.recv(8192).decode('utf-8')
 
                 if not data:
                     break

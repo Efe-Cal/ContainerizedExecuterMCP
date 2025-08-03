@@ -5,6 +5,7 @@ import docker
 import socket
 import json
 from pydantic import Field
+import os
 
 DOCKER_FILE="""
 FROM python:3.11-slim
@@ -102,14 +103,15 @@ def start_code_executer(dependencies:list[str]=Field([],description="The depende
     else:
         _DOCKER_FILE= DOCKER_FILE.replace(";","")
 
-    with open("./code_executer/Dockerfile", "w") as f:
+    dockerfile_path = os.path.join(os.path.dirname(__file__), "code_executer", "Dockerfile")
+    with open(dockerfile_path, "w") as f:
         f.write(_DOCKER_FILE)
         
-    
+    docker_path = os.path.join(os.path.dirname(__file__), "code_executer")
     tag = f"code_executer-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
     client = docker.from_env()
     client.images.build(
-        path="./code_executer",
+        path=docker_path,
         tag=tag,
     )
     container = client.containers.run(
